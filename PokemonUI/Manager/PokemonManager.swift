@@ -1,0 +1,40 @@
+//
+//  PokemonManager.swift
+//  PokemonUI
+//
+//  Created by syawal zt on 04/05/23.
+//
+
+import Foundation
+
+
+class PokemonManager {
+    func getPokemon() -> [Pokemon] {
+        let data: PokemonPage = Bundle.main.decode(file:"pokemon.json")
+        let pokemon: [Pokemon] = data.results
+        //print(data)
+        
+        return pokemon
+    }
+    
+    func getDetailedPokemon(id: Int, _ completion:@escaping (DetailPokemon) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: DetailPokemon.self) { data in
+            completion(data)
+            
+            
+        } failure: { error in
+            print(error)
+        }
+    }
+    func getDetailedPokemonMove(id: Int, _ completion:@escaping (DetailMove) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: DetailMove.self) { data in
+            completion(data)
+            
+            
+        } failure: { error in
+            print(error)
+        }
+    }
+    
+}
+
